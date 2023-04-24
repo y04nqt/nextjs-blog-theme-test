@@ -8,6 +8,13 @@ const headers = {
 
 // Docs on event and context https://docs.netlify.com/functions/build/#code-your-function-2
 const handler = async (event) => {
+  if (event.httpMethod === 'OPTIONS') {
+    return {
+      statusCode: 200,
+      headers,
+      body: 'This is a preflight call',
+    };
+  }
   try {
     console.log(event);
     const body = JSON.parse(event.body);
